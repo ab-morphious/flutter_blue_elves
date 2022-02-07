@@ -77,6 +77,7 @@ class _DeviceControlState extends State<DeviceControl> {
             currentStr = "0" + currentStr;
           }
           data = data! + currentStr;
+          print("data received $data");
         }
       }
       if (event.type == DeviceSignalType.characteristicsRead ||

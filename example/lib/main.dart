@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(milliseconds: 2000),
+    Timer.periodic(const Duration(milliseconds: 5000),
         Platform.isAndroid ? androidGetBlueLack : iosGetBlueState);
     getHideConnectedDevice();
   }
