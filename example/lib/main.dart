@@ -15,6 +15,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
+//flutter blue
 class _MyAppState extends State<MyApp> {
   List<AndroidBluetoothLack> _blueLack = [];
   IosBluetoothState _iosBlueState = IosBluetoothState.unKnown;
