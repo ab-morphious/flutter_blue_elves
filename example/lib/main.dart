@@ -58,13 +58,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    const snackBar = SnackBar(
-      content: Text('App started.'),
-    );
-
-// Find the ScaffoldMessenger in the widget tree
-// and use it to show a SnackBar.
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: Platform.isAndroid ? 100 : null,
