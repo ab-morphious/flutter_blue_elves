@@ -83,6 +83,7 @@ class _DeviceControlState extends State<DeviceControl> {
       if (event.type == DeviceSignalType.characteristicsRead ||
           event.type == DeviceSignalType.unKnown) {
         setState(() {
+          //add snackbar
           _logs.insert(
               0,
               _LogItem(
