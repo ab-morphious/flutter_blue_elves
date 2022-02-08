@@ -58,6 +58,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    const snackBar = SnackBar(
+      content: Text('App started.'),
+    );
+
+// Find the ScaffoldMessenger in the widget tree
+// and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: Platform.isAndroid ? 100 : null,
@@ -183,15 +190,18 @@ class _MyAppState extends State<MyApp> {
                             border: OutlineInputBorder(),
                             hintText: 'Tap here before scan',
                           ),
-                          onChanged: (val){
-                            const snackBar = SnackBar(
-                              content: Text('Yay! A SnackBar!'),
+                         onChanged: (val){
+                            String? newValue = val;
+
+                            final snackBar = SnackBar(
+                              content: Text(newValue),
                             );
 
-                          // Find the ScaffoldMessenger in the widget tree
-                          // and use it to show a SnackBar.
-                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                          },
+// Find the ScaffoldMessenger in the widget tree
+// and use it to show a SnackBar.
+                           ScaffoldMessenger.of(context).showSnackBar
+                             (snackBar);
+                         },
 
                         ),
                       ])
