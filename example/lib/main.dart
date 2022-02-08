@@ -177,6 +177,23 @@ class _MyAppState extends State<MyApp> {
                             }
                           },
                         ),
+
+                        TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Tap here before scan',
+                          ),
+                          onChanged: (val){
+                            const snackBar = SnackBar(
+                              content: Text('Yay! A SnackBar!'),
+                            );
+
+                          // Find the ScaffoldMessenger in the widget tree
+                          // and use it to show a SnackBar.
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          },
+
+                        ),
                       ])
                 ]
               : [
