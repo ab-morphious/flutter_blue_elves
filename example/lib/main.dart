@@ -66,12 +66,18 @@ class _MyAppState extends State<MyApp> {
           children: [
             TextField(
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Tap here before scan',
+                hintText: "Tap here to focus",
+                  filled: true,
+                  fillColor: Colors.blue.shade100,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none,
+                  )
               ),
               onChanged: (val){
                 final snackBar = SnackBar(
-                  content: Text('$val'),
+                  content: Text('$val', style: TextStyle(color: Colors.white),),
+                  backgroundColor: Colors.green,
                 );
 
                 // Find the ScaffoldMessenger in the widget tree
@@ -80,232 +86,6 @@ class _MyAppState extends State<MyApp> {
               },
 
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: Platform.isAndroid
-                  ? [
-                Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextButton.icon(
-                        style: TextButton.styleFrom(
-                          backgroundColor: _blueLack.contains(
-                              AndroidBluetoothLack.locationPermission)
-                              ? Colors.red
-                              : Colors.green,
-                        ),
-                        icon: Icon(_blueLack.contains(
-                            AndroidBluetoothLack.locationPermission)
-                            ? Icons.error
-                            : Icons.done),
-                        label: const Text("GPS Permission",
-                            style: TextStyle(color: Colors.black)),
-                        onPressed: () {
-                          if (_blueLack.contains(
-                              AndroidBluetoothLack.locationPermission)) {
-                            FlutterBlueElves.instance
-                                .androidApplyLocationPermission((isOk) {
-                              print(isOk
-                                  ? "User agrees to grant location permission"
-                                  : "User does not agree to grant location permission");
-                            });
-                          }
-                        },
-                      ),
-                      TextButton.icon(
-                        style: TextButton.styleFrom(
-                          backgroundColor: _blueLack.contains(
-                              AndroidBluetoothLack.locationFunction)
-                              ? Colors.red
-                              : Colors.green,
-                        ),
-                        icon: Icon(_blueLack.contains(
-                            AndroidBluetoothLack.locationFunction)
-                            ? Icons.error
-                            : Icons.done),
-                        label: const Text(
-                          "GPS",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        onPressed: () {
-                          if (_blueLack.contains(
-                              AndroidBluetoothLack.locationFunction)) {
-                            FlutterBlueElves.instance
-                                .androidOpenLocationService((isOk) {
-                              print(isOk
-                                  ? "The user agrees to turn on the positioning function"
-                                  : "The user does not agree to enable the positioning function");
-                            });
-                          }
-                        },
-                      ),
-                    ]),
-                Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextButton.icon(
-                        style: TextButton.styleFrom(
-                          backgroundColor: _blueLack.contains(
-                              AndroidBluetoothLack.bluetoothPermission)
-                              ? Colors.red
-                              : Colors.green,
-                        ),
-                        icon: Icon(_blueLack.contains(
-                            AndroidBluetoothLack.bluetoothPermission)
-                            ? Icons.error
-                            : Icons.done),
-                        label: const Text("Blue Permission",
-                            style: TextStyle(color: Colors.black)),
-                        onPressed: () {
-                          if (_blueLack.contains(
-                              AndroidBluetoothLack.bluetoothPermission)) {
-                            FlutterBlueElves.instance
-                                .androidApplyBluetoothPermission((isOk) {
-                              print(isOk
-                                  ? "User agrees to grant Bluetooth permission"
-                                  : "User does not agree to grant Bluetooth permission");
-                            });
-                          }
-                        },
-                      ),
-                      TextButton.icon(
-                        style: TextButton.styleFrom(
-                          backgroundColor: _blueLack.contains(
-                              AndroidBluetoothLack.bluetoothFunction)
-                              ? Colors.red
-                              : Colors.green,
-                        ),
-                        icon: Icon(_blueLack.contains(
-                            AndroidBluetoothLack.bluetoothFunction)
-                            ? Icons.error
-                            : Icons.done),
-                        label: const Text(
-                          "Blue",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        onPressed: () {
-                          if (_blueLack.contains(
-                              AndroidBluetoothLack.bluetoothFunction)) {
-                            FlutterBlueElves.instance
-                                .androidOpenBluetoothService((isOk) {
-                              print(isOk
-                                  ? "The user agrees to turn on the Bluetooth function"
-                                  : "The user does not agree to enable the Bluetooth function");
-                            });
-                          }
-                        },
-                      ),
-                    ]),
-              ]
-                  : [
-                TextButton.icon(
-                  style: TextButton.styleFrom(
-                      backgroundColor:
-                      _iosBlueState == IosBluetoothState.poweredOn
-                          ? Colors.green
-                          : Colors.red),
-                  icon: Icon(_iosBlueState == IosBluetoothState.poweredOn
-                      ? Icons.done
-                      : Icons.error),
-                  label: Text(
-                      "BlueToothState:" +
-                          _iosBlueState
-                              .toString()
-                              .replaceAll(RegExp("IosBluetoothState."), ""),
-                      style: const TextStyle(color: Colors.black)),
-                  onPressed: () {
-                    if (_iosBlueState == IosBluetoothState.unKnown) {
-                      showDialog<void>(
-                        context: context,
-                        builder: (BuildContext dialogContext) {
-                          return AlertDialog(
-                            title: const Text("Tip"),
-                            content: Text(
-                                "Bluetooth is not initialized, please wait"),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text("close"),
-                                onPressed: () => Navigator.of(context).pop(),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    } else if (_iosBlueState == IosBluetoothState.resetting) {
-                      showDialog<void>(
-                        context: context,
-                        builder: (BuildContext dialogContext) {
-                          return AlertDialog(
-                            title: Text("Tip"),
-                            content:
-                            Text("Bluetooth is resetting, please wait"),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text("close"),
-                                onPressed: () => Navigator.of(context).pop(),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    } else if (_iosBlueState == IosBluetoothState.unSupport) {
-                      showDialog<void>(
-                        context: context,
-                        builder: (BuildContext dialogContext) {
-                          return AlertDialog(
-                            title: Text("Tip"),
-                            content: Text(
-                                "The current device does not support Bluetooth, please check"),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text("close"),
-                                onPressed: () => Navigator.of(context).pop(),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    } else if (_iosBlueState ==
-                        IosBluetoothState.unAuthorized) {
-                      showDialog<void>(
-                        context: context,
-                        builder: (BuildContext dialogContext) {
-                          return AlertDialog(
-                            title: Text("Tip"),
-                            content: Text(
-                                "The current app does not have Bluetooth permission, please go to the settings to grant"),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text("close"),
-                                onPressed: () => Navigator.of(context).pop(),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    } else if (_iosBlueState ==
-                        IosBluetoothState.poweredOff) {
-                      showDialog<void>(
-                        context: context,
-                        builder: (BuildContext dialogContext) {
-                          return AlertDialog(
-                            title: Text("Tip"),
-                            content: Text(
-                                "Bluetooth is not currently turned on, please check"),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text("close"),
-                                onPressed: () => Navigator.of(context).pop(),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  },
-                ),
-              ],
-            )
           ],
         ),
       ),
